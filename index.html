@@ -1234,7 +1234,10 @@
      HERO
 ══════════════════════════ -->
 <section class="hero" id="home">
-  <img src="hero.png" alt="" class="hero-bg" fetchpriority="high" decoding="sync">
+  <picture>
+    <source srcset="heromobile.png" media="(max-width: 680px)">
+    <img src="hero.png" alt="" class="hero-bg" fetchpriority="high" decoding="sync">
+  </picture>
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <div class="hero-ctas">
