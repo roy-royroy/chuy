@@ -253,10 +253,12 @@
     .hero-bg {
       position: absolute;
       inset: 0;
-      background-image: url('hero.png');
-      background-size: cover;
-      background-position: center center;
-      background-repeat: no-repeat;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      display: block;
+      image-rendering: auto;
     }
 
     .hero-overlay {
@@ -1232,7 +1234,7 @@
      HERO
 ══════════════════════════ -->
 <section class="hero" id="home">
-  <div class="hero-bg"></div>
+  <img src="hero.png" alt="" class="hero-bg" fetchpriority="high" decoding="sync">
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <div class="hero-ctas">
