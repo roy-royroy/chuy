@@ -513,30 +513,30 @@
     }
 
     .svc-header {
-      height: 148px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      height: 190px;
       position: relative;
       overflow: hidden;
       flex-shrink: 0;
+      background-size: cover;
+      background-position: center;
     }
 
-    .svc-header-icon {
-      width: 56px;
-      height: 56px;
-      color: rgba(255,255,255,0.95);
-      position: relative;
-      z-index: 1;
-      filter: drop-shadow(0 2px 10px rgba(0,0,0,0.25));
+    .svc-header img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.45s ease;
     }
 
-    /* Subtle shine overlay on header */
+    .svc-card:hover .svc-header img { transform: scale(1.06); }
+
+    /* Dark overlay for contrast */
     .svc-header::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(160deg, rgba(255,255,255,0.12) 0%, transparent 60%);
+      background: linear-gradient(180deg, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.28) 100%);
       pointer-events: none;
     }
 
@@ -577,6 +577,96 @@
     }
 
     .svc-link:hover { color: var(--g500); gap: 8px; }
+
+    /* ── Multi-select dropdown ── */
+    .multi-select { position: relative; }
+
+    .ms-trigger {
+      width: 100%;
+      padding: 12px 15px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.13);
+      border-radius: 10px;
+      color: var(--white);
+      font-size: 14.5px;
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      transition: border-color 0.2s, background 0.2s;
+      text-align: left;
+    }
+
+    .ms-trigger:focus { outline: none; border-color: rgba(245,158,11,0.55); }
+    .ms-trigger.open { border-color: rgba(245,158,11,0.55); background: rgba(255,255,255,0.10); border-radius: 10px 10px 0 0; }
+
+    .ms-trigger-text { flex: 1; color: rgba(255,255,255,0.9); }
+    .ms-trigger-text.placeholder { color: rgba(255,255,255,0.28); }
+
+    .ms-arrow {
+      flex-shrink: 0;
+      color: rgba(255,255,255,0.4);
+      transition: transform 0.2s;
+    }
+
+    .ms-trigger.open .ms-arrow { transform: rotate(180deg); }
+
+    .ms-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0; right: 0;
+      background: #1a3328;
+      border: 1px solid rgba(245,158,11,0.4);
+      border-top: none;
+      border-radius: 0 0 10px 10px;
+      z-index: 200;
+      overflow: hidden;
+      display: none;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+    }
+
+    .ms-dropdown.open { display: block; }
+
+    .ms-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 15px;
+      cursor: pointer;
+      transition: background 0.15s;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .ms-option:last-child { border-bottom: none; }
+    .ms-option:hover { background: rgba(255,255,255,0.06); }
+    .ms-option.checked { background: rgba(61,191,122,0.1); }
+
+    .ms-checkbox {
+      width: 18px;
+      height: 18px;
+      border-radius: 5px;
+      border: 1.5px solid rgba(255,255,255,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .ms-option.checked .ms-checkbox {
+      background: #22c55e;
+      border-color: #22c55e;
+    }
+
+    .ms-option-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.82);
+    }
+
+    .ms-option.checked .ms-option-label { color: #fff; }
 
     /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        WHY CHOOSE US
@@ -704,9 +794,9 @@
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(4,1fr);
-      grid-auto-rows: 200px;
       gap: 12px;
       margin-top: 48px;
+      align-items: start;
     }
 
     .g-item {
@@ -715,15 +805,14 @@
       background: var(--gray-200);
     }
 
-    .g-item:first-child {
-      grid-column: span 2;
-      grid-row: span 2;
-    }
+    .g-landscape { aspect-ratio: 3/2; }
+    .g-portrait  { aspect-ratio: 3/4; grid-row: span 2; }
 
     .g-item img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      display: block;
       transition: transform 0.45s ease;
     }
 
@@ -969,6 +1058,66 @@
     }
 
     /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       SERVICE AREAS BAR
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    .service-areas-bar {
+      background: var(--g950);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 28px 80px;
+    }
+
+    .sa-inner {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .sa-label {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.45);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .sa-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .sa-tag {
+      display: inline-block;
+      padding: 6px 14px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 100px;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      transition: background 0.18s, color 0.18s, border-color 0.18s;
+      white-space: nowrap;
+    }
+
+    .sa-tag:hover {
+      background: rgba(61,191,122,0.12);
+      border-color: rgba(61,191,122,0.35);
+      color: var(--g300);
+    }
+
+    @media (max-width: 680px) {
+      .service-areas-bar { padding: 24px 20px; }
+      .sa-inner { flex-direction: column; align-items: flex-start; gap: 12px; }
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        FOOTER
     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
     .footer {
@@ -1165,7 +1314,7 @@
       .contact-grid { grid-template-columns: 1fr; gap: 48px; }
       .footer-top { grid-template-columns: 1fr 1fr; gap: 36px; }
       .gallery-grid { grid-template-columns: repeat(2,1fr); }
-      .g-item:first-child { grid-column: span 2; }
+      .g-portrait { grid-row: span 2; }
       .testi-grid { grid-template-columns: repeat(2,1fr); }
     }
 
@@ -1191,8 +1340,8 @@
       .why-grid { grid-template-columns: 1fr; }
       .process-steps { grid-template-columns: 1fr; gap: 32px; }
       .testi-grid { grid-template-columns: 1fr; }
-      .gallery-grid { grid-template-columns: 1fr; grid-auto-rows: 180px; }
-      .g-item:first-child { grid-column: auto; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .g-portrait { grid-row: auto; aspect-ratio: 3/2; }
       .form-row { grid-template-columns: 1fr; }
       .footer-top { grid-template-columns: 1fr; }
       .footer-bottom { flex-direction: column; text-align: center; }
@@ -1216,7 +1365,7 @@
 
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
-    <li><a href="#about-sec">About</a></li>
+
     <li><a href="#gallery-sec">Gallery</a></li>
     <li><a href="#contact-sec">Contact</a></li>
   </ul>
@@ -1237,7 +1386,7 @@
 <!-- Mobile Menu -->
 <div class="mobile-menu" id="mobileMenu">
   <a href="#services" onclick="closeMM()">Services</a>
-  <a href="#about-sec" onclick="closeMM()">About Us</a>
+
   <a href="#gallery-sec" onclick="closeMM()">Gallery</a>
   <a href="#contact-sec" onclick="closeMM()">Contact</a>
   <a href="tel:3172011278">📞&nbsp; 317-201-1278</a>
@@ -1258,10 +1407,6 @@
       <a href="#contact-sec" class="btn-primary">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
         Get Free Estimate
-      </a>
-      <a href="tel:3172011278" class="btn-ghost">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-        Call Now
       </a>
     </div>
   </div>
@@ -1305,7 +1450,7 @@
     <div class="stat-lbl">Years Experience</div>
   </div>
   <div class="stat reveal reveal-d2">
-    <div class="stat-num">7</div>
+    <div class="stat-num">8</div>
     <div class="stat-lbl">Services Offered</div>
   </div>
   <div class="stat reveal reveal-d3">
@@ -1334,8 +1479,8 @@
 
     <!-- Mowing -->
     <div class="svc-card reveal reveal-d1">
-      <div class="svc-header" style="background: linear-gradient(135deg, #1a5c3a 0%, #2d9a60 100%);">
-        <svg class="svc-header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17h18M3 7h18M7 12h10"/></svg>
+      <div class="svc-header">
+        <img src="https://images.unsplash.com/photo-1690068023694-053da714f95f?auto=format&fit=crop&w=600&h=380&q=80" alt="Lawn mowing" loading="lazy">
       </div>
       <div class="svc-body">
         <h3 class="svc-title">Lawn Mowing</h3>
@@ -1346,8 +1491,8 @@
 
     <!-- Fertilizing -->
     <div class="svc-card reveal reveal-d2">
-      <div class="svc-header" style="background: linear-gradient(135deg, #1e6e45 0%, #40bf7a 100%);">
-        <svg class="svc-header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V12"/><path d="M5 7c0-2.76 3.13-5 7-5s7 2.24 7 5c0 2.76-3.13 5-7 5S5 9.76 5 7z"/><path d="M9 17c-2 0-4-1-4-3"/><path d="M15 17c2 0 4-1 4-3"/></svg>
+      <div class="svc-header">
+        <img src="https://images.unsplash.com/photo-1716489772327-3e6c6e648708?auto=format&fit=crop&w=600&h=380&q=80" alt="Fertilizer sprayer on lawn" loading="lazy">
       </div>
       <div class="svc-body">
         <h3 class="svc-title">Fertilizing</h3>
@@ -1358,8 +1503,8 @@
 
     <!-- Mulch -->
     <div class="svc-card reveal reveal-d3">
-      <div class="svc-header" style="background: linear-gradient(135deg, #7c4d2e 0%, #c47c44 100%);">
-        <svg class="svc-header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="5" rx="2"/><rect x="2" y="11" width="20" height="5" rx="2"/><rect x="2" y="19" width="20" height="2" rx="1"/></svg>
+      <div class="svc-header">
+        <img src="https://images.unsplash.com/photo-1589562760889-38898c71d3d8?auto=format&fit=crop&w=600&h=380&q=80" alt="Garden mulch" loading="lazy">
       </div>
       <div class="svc-body">
         <h3 class="svc-title">Mulch</h3>
@@ -1370,8 +1515,8 @@
 
     <!-- Cleanups -->
     <div class="svc-card reveal reveal-d4">
-      <div class="svc-header" style="background: linear-gradient(135deg, #1a5c3a 0%, #52b788 100%);">
-        <svg class="svc-header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20H4l2-8h12l2 8z"/><path d="M6.5 12V8a5.5 5.5 0 0111 0v4"/></svg>
+      <div class="svc-header">
+        <img src="https://images.unsplash.com/photo-1671607836278-c7af5e52fb6b?auto=format&fit=crop&w=600&h=380&q=80" alt="Yard cleanup" loading="lazy">
       </div>
       <div class="svc-body">
         <h3 class="svc-title">Yard Cleanups</h3>
@@ -1382,8 +1527,8 @@
 
     <!-- Tree Removal/Trimming -->
     <div class="svc-card reveal reveal-d1">
-      <div class="svc-header" style="background: linear-gradient(135deg, #0d3d20 0%, #1e6040 100%);">
-        <svg class="svc-header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-7"/><path d="M8.5 14c-3.31 0-6-2.69-6-6C2.5 4.69 5.19 2 8.5 2c.86 0 1.68.19 2.41.53A5.99 5.99 0 0121.5 8c0 3.31-2.69 6-6 6H8.5z"/></svg>
+      <div class="svc-header">
+        <img src="https://images.unsplash.com/photo-1754321895426-68b04ba453e3?auto=format&fit=crop&w=600&h=380&q=80" alt="Tree trimming" loading="lazy">
       </div>
       <div class="svc-body">
         <h3 class="svc-title">Tree Removal &amp; Trimming</h3>
@@ -1394,8 +1539,8 @@
 
     <!-- Hardscaping -->
     <div class="svc-card reveal reveal-d2">
-      <div class="svc-header" style="background: linear-gradient(135deg, #2d3748 0%, #5a6d85 100%);">
-        <svg class="svc-header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="14" width="9" height="8" rx="1"/><rect x="13" y="14" width="9" height="8" rx="1"/><rect x="2" y="6" width="9" height="6" rx="1"/><rect x="13" y="2" width="9" height="10" rx="1"/></svg>
+      <div class="svc-header">
+        <img src="https://images.unsplash.com/photo-1758279745629-631607131fb2?auto=format&fit=crop&w=600&h=380&q=80" alt="Luxury paver patio" loading="lazy">
       </div>
       <div class="svc-body">
         <h3 class="svc-title">Hardscaping</h3>
@@ -1406,8 +1551,8 @@
 
     <!-- Snow Removal -->
     <div class="svc-card reveal reveal-d3">
-      <div class="svc-header" style="background: linear-gradient(135deg, #1e3a5f 0%, #3b7dd8 100%);">
-        <svg class="svc-header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"/><path d="M17 7l-5-5-5 5"/><path d="M17 17l-5 5-5-5"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M7 7l-5 5 5 5"/><path d="M17 7l5 5-5 5"/></svg>
+      <div class="svc-header">
+        <img src="https://images.unsplash.com/photo-1644442222742-b01ad3a8de1e?auto=format&fit=crop&w=600&h=380&q=80" alt="Snow plow truck clearing snow" loading="lazy">
       </div>
       <div class="svc-body">
         <h3 class="svc-title">Snow Removal</h3>
@@ -1418,8 +1563,8 @@
 
     <!-- Sod / Hydroseeding -->
     <div class="svc-card reveal reveal-d4">
-      <div class="svc-header" style="background: linear-gradient(135deg, #1a5c3a 0%, #6fd49b 100%);">
-        <svg class="svc-header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V12"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/><path d="M8 6c0-2.76 1.79-5 4-5s4 2.24 4 5"/><path d="M5.5 9a6.5 6.5 0 0 1 13 0"/></svg>
+      <div class="svc-header">
+        <img src="https://images.unsplash.com/photo-1774291634997-cffa1ea51da0?auto=format&fit=crop&w=600&h=380&q=80" alt="Sod installation" loading="lazy">
       </div>
       <div class="svc-body">
         <h3 class="svc-title">Sod &amp; Hydroseeding</h3>
@@ -1522,20 +1667,23 @@
   <p class="sec-sub">A sample of the lawns and landscapes we've transformed across Indianapolis and surrounding areas.</p>
 
   <div class="gallery-grid">
-    <div class="g-item reveal reveal-d1">
-      <img src="https://picsum.photos/seed/gchuymain/800/800" alt="Lawn transformation" loading="lazy">
+    <div class="g-item g-landscape reveal reveal-d1">
+      <img src="landscaping.png" alt="Landscaping work" loading="lazy">
     </div>
-    <div class="g-item reveal reveal-d2">
-      <img src="https://picsum.photos/seed/gchuy2/400/300" alt="Garden beds with fresh mulch" loading="lazy" style="height:100%">
+    <div class="g-item g-landscape reveal reveal-d2">
+      <img src="landscaping2.png" alt="Landscape transformation" loading="lazy">
     </div>
-    <div class="g-item reveal reveal-d3">
-      <img src="https://picsum.photos/seed/gchuy3/400/300" alt="Tree trimming" loading="lazy" style="height:100%">
+    <div class="g-item g-portrait reveal reveal-d3">
+      <img src="hardscaping1.png" alt="Hardscaping project" loading="lazy">
     </div>
-    <div class="g-item reveal reveal-d4">
-      <img src="https://picsum.photos/seed/gchuy4/400/300" alt="Hardscaping patio" loading="lazy" style="height:100%">
+    <div class="g-item g-portrait reveal reveal-d4">
+      <img src="hardscaping3.png" alt="Hardscaping installation" loading="lazy">
     </div>
-    <div class="g-item reveal reveal-d5">
-      <img src="https://picsum.photos/seed/gchuy5/400/300" alt="Yard cleanup" loading="lazy" style="height:100%">
+    <div class="g-item g-landscape reveal reveal-d5">
+      <img src="mowing.png" alt="Lawn mowing" loading="lazy">
+    </div>
+    <div class="g-item g-landscape reveal reveal-d5">
+      <img src="mowing1.png" alt="Lawn mowing results" loading="lazy">
     </div>
   </div>
 </section>
@@ -1634,7 +1782,7 @@
       <h3 class="form-ttl">Request a Free Estimate</h3>
       <p class="form-sub">Fill out the form and we'll get back to you within 24 hours.</p>
       <form id="estForm" action="https://formspree.io/f/meepdbkp" method="POST" onsubmit="handleSubmit(event)">
-        <input type="hidden" name="_subject" value="New Estimate Request — Chuy's Lawncare">
+        <input type="hidden" name="_subject" value="New Estimate Request from {{fname}} {{lname}} — Chuy's Lawncare">
         <div class="form-row">
           <div class="fg">
             <label for="fname">First Name</label>
@@ -1656,19 +1804,48 @@
           </div>
         </div>
         <div class="fg">
-          <label for="service">Service Needed</label>
-          <select id="service" name="service">
-            <option value="">Select a service…</option>
-            <option>Lawn Mowing</option>
-            <option>Fertilizing</option>
-            <option>Mulch</option>
-            <option>Yard Cleanup</option>
-            <option>Tree Removal / Trimming</option>
-            <option>Hardscaping</option>
-            <option>Snow Removal</option>
-            <option>Sod / Hydroseeding</option>
-            <option>Multiple Services</option>
-          </select>
+          <label>Services Needed</label>
+          <input type="hidden" name="service" id="serviceHidden">
+          <div class="multi-select" id="multiSelect">
+            <button type="button" class="ms-trigger" id="msTrigger" onclick="toggleMS()">
+              <span class="ms-trigger-text placeholder" id="msTriggerText">Select services…</span>
+              <svg class="ms-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="ms-dropdown" id="msDropdown">
+              <div class="ms-option" onclick="toggleOption(this, 'Lawn Mowing')">
+                <div class="ms-checkbox"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <span class="ms-option-label">Lawn Mowing</span>
+              </div>
+              <div class="ms-option" onclick="toggleOption(this, 'Fertilizing')">
+                <div class="ms-checkbox"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <span class="ms-option-label">Fertilizing</span>
+              </div>
+              <div class="ms-option" onclick="toggleOption(this, 'Mulch')">
+                <div class="ms-checkbox"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <span class="ms-option-label">Mulch</span>
+              </div>
+              <div class="ms-option" onclick="toggleOption(this, 'Yard Cleanup')">
+                <div class="ms-checkbox"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <span class="ms-option-label">Yard Cleanup</span>
+              </div>
+              <div class="ms-option" onclick="toggleOption(this, 'Tree Removal / Trimming')">
+                <div class="ms-checkbox"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <span class="ms-option-label">Tree Removal / Trimming</span>
+              </div>
+              <div class="ms-option" onclick="toggleOption(this, 'Hardscaping')">
+                <div class="ms-checkbox"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <span class="ms-option-label">Hardscaping</span>
+              </div>
+              <div class="ms-option" onclick="toggleOption(this, 'Snow Removal')">
+                <div class="ms-checkbox"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <span class="ms-option-label">Snow Removal</span>
+              </div>
+              <div class="ms-option" onclick="toggleOption(this, 'Sod / Hydroseeding')">
+                <div class="ms-checkbox"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <span class="ms-option-label">Sod / Hydroseeding</span>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="fg">
           <label for="address">Property Address</label>
@@ -1689,6 +1866,33 @@
 
   </div>
 </section>
+
+<!-- ══════════════════════════
+     SERVICE AREAS
+══════════════════════════ -->
+<div class="service-areas-bar">
+  <div class="sa-inner">
+    <span class="sa-label">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+      Areas We Serve
+    </span>
+    <div class="sa-tags">
+      <a href="carmel.html" class="sa-tag">Carmel</a>
+      <a href="fishers.html" class="sa-tag">Fishers</a>
+      <a href="crows-nest.html" class="sa-tag">Crows Nest</a>
+      <a href="noblesville.html" class="sa-tag">Noblesville</a>
+      <a href="spring-hill.html" class="sa-tag">Spring Hill</a>
+      <a href="rocky-ripple.html" class="sa-tag">Rocky Ripple</a>
+      <a href="meridian-hills.html" class="sa-tag">Meridian Hills</a>
+      <a href="wynnedale.html" class="sa-tag">Wynnedale</a>
+      <a href="north-crows-nest.html" class="sa-tag">North Crows Nest</a>
+      <a href="indianapolis.html" class="sa-tag">Indianapolis</a>
+      <a href="castleton-indianapolis.html" class="sa-tag">Castleton</a>
+      <a href="devonshire-indianapolis.html" class="sa-tag">Devonshire</a>
+      <a href="broad-ripple-indianapolis.html" class="sa-tag">Broad Ripple</a>
+    </div>
+  </div>
+</div>
 
 <!-- ══════════════════════════
      FOOTER
@@ -1724,7 +1928,7 @@
       <div class="footer-col-ttl">Quick Links</div>
       <ul class="footer-links">
         <li><a href="#home">Home</a></li>
-        <li><a href="#about-sec">About Us</a></li>
+
         <li><a href="#services">Services</a></li>
         <li><a href="#gallery-sec">Gallery</a></li>
         <li><a href="#contact-sec">Contact</a></li>
@@ -1798,6 +2002,50 @@
     floatCta.classList.toggle('hidden', entries[0].isIntersecting);
   }, { threshold: 0.05 });
   fo.observe(contactSec);
+
+  /* ── Multi-select dropdown ── */
+  const selectedServices = new Set();
+
+  function toggleMS() {
+    const trigger  = document.getElementById('msTrigger');
+    const dropdown = document.getElementById('msDropdown');
+    trigger.classList.toggle('open');
+    dropdown.classList.toggle('open');
+  }
+
+  function toggleOption(el, value) {
+    el.classList.toggle('checked');
+    if (selectedServices.has(value)) {
+      selectedServices.delete(value);
+    } else {
+      selectedServices.add(value);
+    }
+    updateMSTrigger();
+  }
+
+  function updateMSTrigger() {
+    const text   = document.getElementById('msTriggerText');
+    const hidden = document.getElementById('serviceHidden');
+    if (selectedServices.size === 0) {
+      text.textContent = 'Select services…';
+      text.classList.add('placeholder');
+      hidden.value = '';
+    } else {
+      const arr = Array.from(selectedServices);
+      text.textContent = arr.length === 1 ? arr[0] : arr.length + ' services selected';
+      text.classList.remove('placeholder');
+      hidden.value = arr.join(', ');
+    }
+  }
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', e => {
+    const ms = document.getElementById('multiSelect');
+    if (ms && !ms.contains(e.target)) {
+      document.getElementById('msTrigger').classList.remove('open');
+      document.getElementById('msDropdown').classList.remove('open');
+    }
+  });
 
   /* ── Form submit → Formspree ── */
   async function handleSubmit(e) {
