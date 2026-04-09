@@ -474,7 +474,12 @@
     /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        SERVICES
     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-    .services-sec { background: var(--gray-50); padding: 104px 80px; }
+    .services-sec { background: var(--g900); padding: 104px 80px; }
+
+    .services-sec .sec-eyebrow { color: var(--g300); }
+    .services-sec .sec-eyebrow::before { background: var(--g300); }
+    .services-sec .sec-title { color: var(--white); }
+    .services-sec .sec-sub { color: rgba(255,255,255,0.55); }
 
     .services-head {
       display: flex;
@@ -487,72 +492,83 @@
 
     .services-grid {
       display: grid;
-      grid-template-columns: repeat(3,1fr);
-      gap: 22px;
-    }
-
-    /* Make snow removal span if needed */
-    .services-grid .svc-card:nth-child(7) {
-      grid-column: 1 / -1;
-      max-width: 420px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
     }
 
     .svc-card {
       background: var(--white);
-      border-radius: 22px;
+      border-radius: 20px;
       overflow: hidden;
-      border: 1px solid var(--gray-200);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.28s ease, box-shadow 0.28s ease;
+      cursor: default;
     }
 
     .svc-card:hover {
-      transform: translateY(-7px);
-      box-shadow:
-        0 24px 64px rgba(0,0,0,0.10),
-        0 6px 20px rgba(0,0,0,0.06);
+      transform: translateY(-6px);
+      box-shadow: 0 24px 56px rgba(0,0,0,0.22), 0 6px 18px rgba(0,0,0,0.12);
     }
 
-    .svc-img {
-      width: 100%;
-      height: 210px;
-      object-fit: cover;
-    }
-
-    .svc-body { padding: 26px 28px 28px; }
-
-    .svc-icon-wrap {
-      width: 46px;
-      height: 46px;
-      border-radius: 13px;
-      background: var(--g50);
-      border: 1px solid var(--g200);
+    .svc-header {
+      height: 148px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 14px;
-      color: var(--g700);
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .svc-header-icon {
+      width: 56px;
+      height: 56px;
+      color: rgba(255,255,255,0.95);
+      position: relative;
+      z-index: 1;
+      filter: drop-shadow(0 2px 10px rgba(0,0,0,0.25));
+    }
+
+    /* Subtle shine overlay on header */
+    .svc-header::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, rgba(255,255,255,0.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .svc-body {
+      padding: 20px 22px 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
     }
 
     .svc-title {
-      font-size: 19px;
+      font-size: 16px;
       font-weight: 800;
       color: var(--gray-900);
-      letter-spacing: -0.5px;
-      margin-bottom: 8px;
+      letter-spacing: -0.3px;
+      margin-bottom: 7px;
+      line-height: 1.25;
     }
 
     .svc-desc {
-      font-size: 14px;
+      font-size: 13px;
       color: var(--gray-500);
       line-height: 1.65;
+      flex: 1;
     }
 
     .svc-link {
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      margin-top: 16px;
-      font-size: 13.5px;
+      margin-top: 14px;
+      font-size: 13px;
       font-weight: 700;
       color: var(--g700);
       text-decoration: none;
@@ -560,7 +576,7 @@
       transition: color 0.18s, gap 0.18s;
     }
 
-    .svc-link:hover { color: var(--g600); gap: 8px; }
+    .svc-link:hover { color: var(--g500); gap: 8px; }
 
     /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        WHY CHOOSE US
@@ -1144,7 +1160,6 @@
 
       .hero-content { padding: 80px 40px 64px; }
       .services-grid { grid-template-columns: repeat(2,1fr); }
-      .services-grid .svc-card:nth-child(7) { grid-column: auto; max-width: 100%; }
       .why-grid { grid-template-columns: repeat(2,1fr); }
       .process-steps::before { display: none; }
       .contact-grid { grid-template-columns: 1fr; gap: 48px; }
@@ -1173,7 +1188,6 @@
 
       .services-head { flex-direction: column; align-items: flex-start; }
       .services-grid { grid-template-columns: 1fr; }
-      .services-grid .svc-card:nth-child(7) { grid-column: auto; }
       .why-grid { grid-template-columns: 1fr; }
       .process-steps { grid-template-columns: 1fr; gap: 32px; }
       .testi-grid { grid-template-columns: 1fr; }
@@ -1320,11 +1334,10 @@
 
     <!-- Mowing -->
     <div class="svc-card reveal reveal-d1">
-      <img src="https://picsum.photos/seed/mowing99/600/400" alt="Lawn mowing service" class="svc-img" loading="lazy">
+      <div class="svc-header" style="background: linear-gradient(135deg, #1a5c3a 0%, #2d9a60 100%);">
+        <svg class="svc-header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17h18M3 7h18M7 12h10"/></svg>
+      </div>
       <div class="svc-body">
-        <div class="svc-icon-wrap">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17h18M3 7h18M7 12h10"/></svg>
-        </div>
         <h3 class="svc-title">Lawn Mowing</h3>
         <p class="svc-desc">Weekly or bi-weekly cuts with professional trimming, edging, and cleanup every visit. Your lawn stays sharp all season.</p>
         <a href="#contact-sec" class="svc-link">Request a quote →</a>
@@ -1333,11 +1346,10 @@
 
     <!-- Fertilizing -->
     <div class="svc-card reveal reveal-d2">
-      <img src="https://picsum.photos/seed/fertilize77/600/400" alt="Lawn fertilizing" class="svc-img" loading="lazy">
+      <div class="svc-header" style="background: linear-gradient(135deg, #1e6e45 0%, #40bf7a 100%);">
+        <svg class="svc-header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V12"/><path d="M5 7c0-2.76 3.13-5 7-5s7 2.24 7 5c0 2.76-3.13 5-7 5S5 9.76 5 7z"/><path d="M9 17c-2 0-4-1-4-3"/><path d="M15 17c2 0 4-1 4-3"/></svg>
+      </div>
       <div class="svc-body">
-        <div class="svc-icon-wrap">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V12"/><path d="M5 7c0-2.76 3.13-5 7-5s7 2.24 7 5c0 2.76-3.13 5-7 5S5 9.76 5 7z"/></svg>
-        </div>
         <h3 class="svc-title">Fertilizing</h3>
         <p class="svc-desc">Multiple annual soil treatment applications to give your lawn the nutrients it needs for thick, green growth year-round.</p>
         <a href="#contact-sec" class="svc-link">Request a quote →</a>
@@ -1346,11 +1358,10 @@
 
     <!-- Mulch -->
     <div class="svc-card reveal reveal-d3">
-      <img src="https://picsum.photos/seed/mulch88/600/400" alt="Mulch installation" class="svc-img" loading="lazy">
+      <div class="svc-header" style="background: linear-gradient(135deg, #7c4d2e 0%, #c47c44 100%);">
+        <svg class="svc-header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="5" rx="2"/><rect x="2" y="11" width="20" height="5" rx="2"/><rect x="2" y="19" width="20" height="2" rx="1"/></svg>
+      </div>
       <div class="svc-body">
-        <div class="svc-icon-wrap">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="5" rx="2"/><rect x="2" y="11" width="20" height="5" rx="2"/><rect x="2" y="19" width="20" height="2" rx="1"/></svg>
-        </div>
         <h3 class="svc-title">Mulch</h3>
         <p class="svc-desc">Fresh garden bed installs and yearly mulch applications. Suppresses weeds, retains moisture, and finishes your landscape beautifully.</p>
         <a href="#contact-sec" class="svc-link">Request a quote →</a>
@@ -1358,12 +1369,11 @@
     </div>
 
     <!-- Cleanups -->
-    <div class="svc-card reveal reveal-d1">
-      <img src="https://picsum.photos/seed/cleanup55/600/400" alt="Yard cleanup" class="svc-img" loading="lazy">
+    <div class="svc-card reveal reveal-d4">
+      <div class="svc-header" style="background: linear-gradient(135deg, #1a5c3a 0%, #52b788 100%);">
+        <svg class="svc-header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20H4l2-8h12l2 8z"/><path d="M6.5 12V8a5.5 5.5 0 0111 0v4"/></svg>
+      </div>
       <div class="svc-body">
-        <div class="svc-icon-wrap">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20H4l2-8h12l2 8z"/><path d="M6.5 12V8a5.5 5.5 0 0111 0v4"/></svg>
-        </div>
         <h3 class="svc-title">Yard Cleanups</h3>
         <p class="svc-desc">Seasonal spring and fall cleanups to clear leaves, debris, and dead growth. Leave your property fresh and ready for the next season.</p>
         <a href="#contact-sec" class="svc-link">Request a quote →</a>
@@ -1371,12 +1381,11 @@
     </div>
 
     <!-- Tree Removal/Trimming -->
-    <div class="svc-card reveal reveal-d2">
-      <img src="https://picsum.photos/seed/treetrm33/600/400" alt="Tree removal and trimming" class="svc-img" loading="lazy">
+    <div class="svc-card reveal reveal-d1">
+      <div class="svc-header" style="background: linear-gradient(135deg, #0d3d20 0%, #1e6040 100%);">
+        <svg class="svc-header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-7"/><path d="M8.5 14c-3.31 0-6-2.69-6-6C2.5 4.69 5.19 2 8.5 2c.86 0 1.68.19 2.41.53A5.99 5.99 0 0121.5 8c0 3.31-2.69 6-6 6H8.5z"/></svg>
+      </div>
       <div class="svc-body">
-        <div class="svc-icon-wrap">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-7"/><path d="M8.5 14c-3.31 0-6-2.69-6-6C2.5 4.69 5.19 2 8.5 2c.86 0 1.68.19 2.41.53A5.99 5.99 0 0121.5 8c0 3.31-2.69 6-6 6H8.5z"/></svg>
-        </div>
         <h3 class="svc-title">Tree Removal &amp; Trimming</h3>
         <p class="svc-desc">Professional bush and tree trimming to shape your landscape. Safe removal of hazardous or unwanted trees with full cleanup included.</p>
         <a href="#contact-sec" class="svc-link">Request a quote →</a>
@@ -1384,27 +1393,37 @@
     </div>
 
     <!-- Hardscaping -->
-    <div class="svc-card reveal reveal-d3">
-      <img src="https://picsum.photos/seed/hardscape11/600/400" alt="Hardscaping" class="svc-img" loading="lazy">
+    <div class="svc-card reveal reveal-d2">
+      <div class="svc-header" style="background: linear-gradient(135deg, #2d3748 0%, #5a6d85 100%);">
+        <svg class="svc-header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="14" width="9" height="8" rx="1"/><rect x="13" y="14" width="9" height="8" rx="1"/><rect x="2" y="6" width="9" height="6" rx="1"/><rect x="13" y="2" width="9" height="10" rx="1"/></svg>
+      </div>
       <div class="svc-body">
-        <div class="svc-icon-wrap">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="14" width="9" height="8" rx="1"/><rect x="13" y="14" width="9" height="8" rx="1"/><rect x="2" y="6" width="9" height="6" rx="1"/><rect x="13" y="2" width="9" height="10" rx="1"/></svg>
-        </div>
         <h3 class="svc-title">Hardscaping</h3>
-        <p class="svc-desc">Transform your outdoor space with patios, walkways, and retaining walls. We design and install durable hardscape features that add lasting value.</p>
+        <p class="svc-desc">Patios, walkways, and retaining walls built to last. We design and install durable hardscape features that add serious curb appeal.</p>
         <a href="#contact-sec" class="svc-link">Request a quote →</a>
       </div>
     </div>
 
     <!-- Snow Removal -->
-    <div class="svc-card reveal reveal-d1">
-      <img src="https://picsum.photos/seed/snowrem22/600/400" alt="Snow removal" class="svc-img" loading="lazy">
+    <div class="svc-card reveal reveal-d3">
+      <div class="svc-header" style="background: linear-gradient(135deg, #1e3a5f 0%, #3b7dd8 100%);">
+        <svg class="svc-header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"/><path d="M17 7l-5-5-5 5"/><path d="M17 17l-5 5-5-5"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M7 7l-5 5 5 5"/><path d="M17 7l5 5-5 5"/></svg>
+      </div>
       <div class="svc-body">
-        <div class="svc-icon-wrap">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"/><path d="M17 7l-5-5-5 5"/><path d="M17 17l-5 5-5-5"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M7 7l-5 5 5 5"/><path d="M17 7l5 5-5 5"/></svg>
-        </div>
         <h3 class="svc-title">Snow Removal</h3>
         <p class="svc-desc">Reliable residential and commercial snow removal to keep driveways, walkways, and parking lots safe and clear all winter long.</p>
+        <a href="#contact-sec" class="svc-link">Request a quote →</a>
+      </div>
+    </div>
+
+    <!-- Sod / Hydroseeding -->
+    <div class="svc-card reveal reveal-d4">
+      <div class="svc-header" style="background: linear-gradient(135deg, #1a5c3a 0%, #6fd49b 100%);">
+        <svg class="svc-header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V12"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/><path d="M8 6c0-2.76 1.79-5 4-5s4 2.24 4 5"/><path d="M5.5 9a6.5 6.5 0 0 1 13 0"/></svg>
+      </div>
+      <div class="svc-body">
+        <h3 class="svc-title">Sod &amp; Hydroseeding</h3>
+        <p class="svc-desc">Get a lush, full lawn fast. Perfect for new construction, bare patches, or a complete lawn renovation done right.</p>
         <a href="#contact-sec" class="svc-link">Request a quote →</a>
       </div>
     </div>
@@ -1646,6 +1665,7 @@
             <option>Tree Removal / Trimming</option>
             <option>Hardscaping</option>
             <option>Snow Removal</option>
+            <option>Sod / Hydroseeding</option>
             <option>Multiple Services</option>
           </select>
         </div>
@@ -1692,6 +1712,7 @@
         <li><a href="#services">Tree Removal &amp; Trimming</a></li>
         <li><a href="#services">Hardscaping</a></li>
         <li><a href="#services">Snow Removal</a></li>
+        <li><a href="#services">Sod &amp; Hydroseeding</a></li>
       </ul>
     </div>
 
